@@ -10,15 +10,15 @@
 
   tasks:
     - name: Install packages
-      action: dnf name={{ item }} state=present update_cache=yes
+      action: apt name={{ item }} state=present update_cache=yes
       loop: "{{ packages }}"
       when: operation == "install"
 
     - name: Remove packages
-      action: dnf name={{ item }} state=absent
+      action: apt name={{ item }} state=absent
       loop: "{{ packages }}"
       when: operation == "remove"
 
     - name: Autoremove unused packages (only on removal)
-      action: command dnf autoremove -y
+      action: command apt autoremove -y
       when: operation == "remove"
